@@ -28,15 +28,16 @@ being enabled.
 
 ```ini
 StylesPath = styles
-Packages = https://github.com/jdkato/opensource/releases/latest/download/OpenSource.zip
+Packages = OpenSource
 ```
 
 ```console
 $ vale sync
 ```
 
-To pin a version, use a release URL instead:
-`https://github.com/jdkato/opensource/releases/download/v0.1.0/OpenSource.zip`.
+`OpenSource` is in the [package library](https://vale.sh/explorer), so the
+name is enough. To pin a version, give its release URL instead:
+`https://github.com/jdkato/opensource/releases/download/<version>/OpenSource.zip`.
 
 Vale doesn't know which kind of file it is reading, so the package's config
 chooses a style by file name, wherever the file is:
