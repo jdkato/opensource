@@ -1,0 +1,33 @@
+# Standard Readme requires an Install section. Installation, Getting started,
+# Quick start, Setup, and Building count.
+extends: occurrence
+message: "No Install section. Add one that shows how to install the project in a code block."
+link: https://github.com/RichardLitt/standard-readme/blob/main/spec.md#install
+level: warning
+scope: raw
+# A heading of any level, after an optional emoji, or a setext heading.
+token: '(?im)^(?: {0,3}#{1,6}[ \t]+|[ \t]*<h[1-6][^>]*>[ \t]*)(?:[^\w\n]+|:\w+:[ \t]*)*(?:install(?:ation|ing)?|get(?:ting)?[ -]started|quick[ -]?start|set[ -]?up|setting up|downloads?|building)\b|^(?:install(?:ation|ing)?|get(?:ting)?[ -]started|quick[ -]?start|set[ -]?up|setting up|downloads?|building)\b[^\n]*\n {0,3}(?:=+|-+)[ \t]*$'
+min: 1
+
+tests:
+  - name: fires
+    input: |
+      # tool
+
+      Turn CSV files into charts.
+
+      ## Overview
+
+      Text.
+    want: |
+      1:1:Readme.Install:No Install section. Add one that shows how to install the project in a code block.
+  - name: clean
+    input: |
+      # tool
+
+      Turn CSV files into charts.
+
+      ## Installation
+
+      Text.
+    want: ""

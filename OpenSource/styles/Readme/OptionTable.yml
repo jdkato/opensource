@@ -1,0 +1,29 @@
+# A table of every command-line flag is reference, and a README that
+# carries one is turning into a manual. Show the common flags in use and
+# link to the full list.
+extends: occurrence
+message: "%d table rows list command-line options. Show the common ones in use, and link to the full list."
+link: https://gitlab.com/tgdp/templates/-/blob/main/readme/guide_readme.md#readme-best-practices
+level: suggestion
+scope: raw
+token: '(?m)^ {0,3}\|[ \t]*`-{1,2}[A-Za-z]'
+max: 6
+
+tests:
+  - name: fires
+    input: |
+      | Flag | Meaning |
+      | ---- | ------- |
+      | `--width` | Chart width. |
+      | `--height` | Chart height. |
+      | `--color` | Bar color. |
+      | `--title` | Chart title. |
+      | `--legend` | Show a legend. |
+      | `--log` | Log scale. |
+      | `-q` | Quiet. |
+    want: |
+      3:1:Readme.OptionTable:7 table rows list command-line options. Show the common ones in use, and link to the full list.
+  - name: clean
+    input: |
+      Run `tool --width 80 data.csv` for a narrower chart. See the docs for every flag.
+    want: ""

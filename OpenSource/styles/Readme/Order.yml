@@ -1,0 +1,66 @@
+# Standard Readme's sections come in a fixed order. Of the required ones,
+# Install comes before Usage, and Usage before Contributing.
+extends: script
+message: "'%s' is out of Standard Readme order."
+link: https://github.com/RichardLitt/standard-readme/blob/main/spec.md#specification
+level: warning
+scope: raw
+script: ReadmeSectionOrder.tengo
+
+tests:
+  - name: fires
+    input: |
+      # tool
+
+      Turn CSV files into charts.
+
+      ## Usage
+
+      ## Contributing
+
+      ## Installation
+    want: |
+      9:4:Readme.Order:'Installation' is the Install section; it goes before Contributing.
+  - name: one alert per section
+    input: |
+      # tool
+
+      ## Contributing
+
+      ## Examples
+
+      ### Usage in CI
+
+      ## 📦 Getting started
+    want: |
+      5:4:Readme.Order:'Examples' is the Usage section; it goes before Contributing.
+      9:4:Readme.Order:'📦 Getting started' is the Install section; it goes before Contributing.
+  - name: setext and fenced code
+    input: |
+      tool
+      ====
+
+      Usage
+      -----
+
+      ```md
+      ## Install
+      ```
+
+      Contributing
+      ------------
+    want: ""
+  - name: clean
+    input: |
+      # tool
+
+      ## Getting started
+
+      ### Usage
+
+      ## Usage
+
+      ## Contributing
+
+      ## License
+    want: ""

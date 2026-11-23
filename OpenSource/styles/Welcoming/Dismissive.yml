@@ -1,0 +1,38 @@
+# Words that call a step easy tell a newcomer who is stuck on it that the
+# problem is them. Drop the word; the step reads the same without it. A
+# word in quotes is a mention, and "will simply be" means "merely".
+extends: existence
+message: "'%s' can make a newcomer who is stuck feel shut out. Drop it."
+link: https://opensource.guide/starting-a-project/#how-you-write-and-code-affects-your-brand-too
+level: suggestion
+ignorecase: true
+tokens:
+  - (?<!["'“‘])(?:obviously|of course|trivially)(?!["'”’])
+  - (?<!["'“‘]|\b(?:will|would|be|is|are|was|were) )simply(?!["'”’]| because\b)
+  - (?:as )?every(?:one|body) knows
+  - just(?= (?:run|use|type|install|add|call|open|click|clone|copy|edit|fork|change|set|create|make|send|submit|write|pass|import|go|read|follow|do|put|download|build|push|update|delete|remove)\b)
+  - (?:it'?s|it is|that'?s|that is|this is|is) (?:really |very |super |pretty |quite )?(?:easy|trivial)(?! to (?:read|use|learn|find|remember|install))
+
+tests:
+  - name: fires
+    input: |
+      Simply clone the repo. Obviously, you need Go; of course it's easy, just run make.
+    want: |
+      1:1:Welcoming.Dismissive:'Simply' can make a newcomer who is stuck feel shut out. Drop it.
+      1:24:Welcoming.Dismissive:'Obviously' can make a newcomer who is stuck feel shut out. Drop it.
+      1:48:Welcoming.Dismissive:'of course' can make a newcomer who is stuck feel shut out. Drop it.
+      1:58:Welcoming.Dismissive:'it's easy' can make a newcomer who is stuck feel shut out. Drop it.
+      1:69:Welcoming.Dismissive:'just' can make a newcomer who is stuck feel shut out. Drop it.
+  - name: everyone knows
+    input: |
+      As everyone knows, the cache is per user.
+    want: |
+      1:1:Welcoming.Dismissive:'As everyone knows' can make a newcomer who is stuck feel shut out. Drop it.
+  - name: other senses and mentions are left alone
+    input: |
+      The API is just as fast, and the format is easy to read. It was released just now. Words like "simply" are flagged. The text will simply be appended, simply because it is shorter.
+    want: ""
+  - name: clean
+    input: |
+      Clone the repository. You need Go; run `make` to build.
+    want: ""

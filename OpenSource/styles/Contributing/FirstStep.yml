@@ -1,0 +1,24 @@
+# A guide that only lists rules never tells a newcomer where to begin.
+# Point them at good first issues, or say what a first contribution can be.
+extends: occurrence
+message: "Nothing here tells a newcomer where to start. Point to good first issues, or name a first step."
+link: https://opensource.guide/building-community/#make-people-feel-welcome
+level: suggestion
+scope: raw
+token: '(?i)\bgood[- ]first[- ]issues?\b|\bfirst[- ]timers?\b|\bhelp[- ]wanted\b|\bfirst (?:code )?(?:contribution|pull request|PR|issue|patch)\b|\bwhere to (?:start|begin)\b|\bget(?:ting)? started\b|\bnew contributors?\b|\bnewcomers?\b|\bbeginners?\b|\bhow (?:can I|to|you can) (?:contribute|help)\b'
+min: 1
+
+tests:
+  - name: fires
+    input: |
+      # Contributing
+
+      Pull requests must pass CI and follow the style guide.
+    want: |
+      1:1:Contributing.FirstStep:Nothing here tells a newcomer where to start. Point to good first issues, or name a first step.
+  - name: clean
+    input: |
+      # Contributing
+
+      New here? Pick an issue labeled `good first issue`.
+    want: ""

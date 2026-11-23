@@ -1,0 +1,39 @@
+# Setup is a procedure, so it reads best as numbered steps. A section that
+# links to the guide holding the steps is fine.
+extends: existence
+message: "The '%s' section has no numbered steps. Write the setup as a numbered list, or link to the guide that has it."
+link: https://gitlab.com/tgdp/templates/-/blob/main/contributing-guide/guide_contributing-guide.md#about-the-environment-setup-section
+level: suggestion
+scope: 'doc(section:has(> :is(h1, h2, h3, h4, h5, h6):is(:contains("Setting up"), :contains("Set up"), :contains("Setup"), :contains("Environment"), :contains("Getting started"), :contains("Local development"), :contains("Building"))):not(:has(ol)):not(:has(a)))'
+nonword: true
+raw:
+  - '^[^\n]+'
+
+tests:
+  - name: fires
+    input: |
+      # Contributing
+
+      ## Setting up
+
+      Install Go, clone the repository, and run `make`.
+    want: |
+      3:4:Contributing.Steps:The 'Setting up' section has no numbered steps. Write the setup as a numbered list, or link to the guide that has it.
+  - name: a link to the steps
+    input: |
+      # Contributing
+
+      ## Building
+
+      See [the build guide](docs/build.md).
+    want: ""
+  - name: clean
+    input: |
+      # Contributing
+
+      ## Setting up
+
+      1. Install Go 1.22 or later.
+      2. Clone the repository.
+      3. Run `make`.
+    want: ""

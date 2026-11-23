@@ -1,0 +1,33 @@
+# Standard Readme requires a Contributing section. Contribute, How to
+# contribute, and Development count.
+extends: occurrence
+message: "No Contributing section. Say where to ask questions and whether pull requests are welcome."
+link: https://github.com/RichardLitt/standard-readme/blob/main/spec.md#contributing
+level: warning
+scope: raw
+# A heading of any level, after an optional emoji, or a setext heading.
+token: '(?im)^(?: {0,3}#{1,6}[ \t]+|[ \t]*<h[1-6][^>]*>[ \t]*)(?:[^\w\n]+|:\w+:[ \t]*)*(?:contribut\w*|how to (?:contribute|help)|get involved|development|developing|hacking)\b|^(?:contribut\w*|how to (?:contribute|help)|get involved|development|developing|hacking)\b[^\n]*\n {0,3}(?:=+|-+)[ \t]*$'
+min: 1
+
+tests:
+  - name: fires
+    input: |
+      # tool
+
+      Turn CSV files into charts.
+
+      ## Overview
+
+      Text.
+    want: |
+      1:1:Readme.Contributing:No Contributing section. Say where to ask questions and whether pull requests are welcome.
+  - name: clean
+    input: |
+      # tool
+
+      Turn CSV files into charts.
+
+      ## Contributing
+
+      Text.
+    want: ""

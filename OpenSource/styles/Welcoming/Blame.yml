@@ -1,0 +1,36 @@
+# Phrasing that blames the reader for not knowing something, or threatens
+# to close their work, puts newcomers off. Say what to do instead.
+extends: existence
+message: "'%s' blames the reader. Say what to do instead."
+link: https://opensource.guide/building-community/#make-people-feel-welcome
+level: suggestion
+ignorecase: true
+tokens:
+  - RTFM
+  - you should have (?:read|known|checked|searched|looked)
+  - did(?:n't| not) (?:you )?(?:even )?(?:read|bother|search|look)
+  - did you (?:even )?(?:read|bother|search|look)
+  - (?:as|like) (?:already|clearly|previously) (?:stated|mentioned|explained|documented|said)
+  - (?:will|may|might) be (?:closed|rejected|ignored|deleted) without (?:comment|discussion|explanation|review|warning|notice|a reply|a response)
+  - (?:low[- ]effort|lazy) (?:issues?|PRs?|pull requests?|contributions?|questions?)
+  - (?:wast(?:e|es|ing) (?:of )?(?:our|my|the maintainers'?) time)
+  - if you can'?t be bothered
+
+tests:
+  - name: fires
+    input: |
+      As already stated, pull requests that skip the template will be closed without comment.
+    want: |
+      1:1:Welcoming.Blame:'As already stated' blames the reader. Say what to do instead.
+      1:57:Welcoming.Blame:'will be closed without comment' blames the reader. Say what to do instead.
+  - name: did you read
+    input: |
+      Did you even read the docs? Low-effort issues waste our time.
+    want: |
+      1:1:Welcoming.Blame:'Did you even read' blames the reader. Say what to do instead.
+      1:29:Welcoming.Blame:'Low-effort issues' blames the reader. Say what to do instead.
+      1:47:Welcoming.Blame:'waste our time' blames the reader. Say what to do instead.
+  - name: clean
+    input: |
+      Fill in the pull request template, so a reviewer has what they need. The docs cover setup.
+    want: ""

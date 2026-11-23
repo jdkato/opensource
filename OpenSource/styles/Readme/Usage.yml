@@ -1,0 +1,33 @@
+# Standard Readme requires a Usage section. Examples, How to use, Getting
+# started, Configuration, and Documentation count.
+extends: occurrence
+message: "No Usage section. Add one that shows the project in use in a code block."
+link: https://github.com/RichardLitt/standard-readme/blob/main/spec.md#usage
+level: warning
+scope: raw
+# A heading of any level, after an optional emoji, or a setext heading.
+token: '(?im)^(?: {0,3}#{1,6}[ \t]+|[ \t]*<h[1-6][^>]*>[ \t]*)(?:[^\w\n]+|:\w+:[ \t]*)*(?:usage|basic usage|how to use|use|using|examples?|get(?:ting)?[ -]started|quick[ -]?start|tutorial|configur\w*|documentation|docs|commands?|cli)\b|^(?:usage|basic usage|how to use|use|using|examples?|get(?:ting)?[ -]started|quick[ -]?start|tutorial|configur\w*|documentation|docs|commands?|cli)\b[^\n]*\n {0,3}(?:=+|-+)[ \t]*$'
+min: 1
+
+tests:
+  - name: fires
+    input: |
+      # tool
+
+      Turn CSV files into charts.
+
+      ## Overview
+
+      Text.
+    want: |
+      1:1:Readme.Usage:No Usage section. Add one that shows the project in use in a code block.
+  - name: clean
+    input: |
+      # tool
+
+      Turn CSV files into charts.
+
+      ## Usage
+
+      Text.
+    want: ""

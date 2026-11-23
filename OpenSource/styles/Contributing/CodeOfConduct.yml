@@ -1,0 +1,33 @@
+# A contributing guide sets the ground rules for behavior, usually by
+# linking to the project's code of conduct.
+extends: occurrence
+message: "No link to a code of conduct. Link to the one the project follows."
+link: https://gitlab.com/tgdp/templates/-/blob/main/contributing-guide/guide_contributing-guide.md#about-the-ground-rules-section
+level: warning
+scope: raw
+# Link text or a URL that names it, inline or by reference.
+token: '(?i)\[[^\]\n]*(?:conduct|covenant)[^\]\n]*\]\s*[(\[]|\]\([^)\s]*(?:conduct|covenant)[^)\s]*\)|<a\s[^>]*href="[^"]*(?:conduct|covenant)|https?://\S*(?:conduct|covenant)'
+min: 1
+
+tests:
+  - name: fires
+    input: |
+      # Contributing
+
+      Please follow our code of conduct.
+    want: |
+      1:1:Contributing.CodeOfConduct:No link to a code of conduct. Link to the one the project follows.
+  - name: a reference link
+    input: |
+      # Contributing
+
+      Read the [code of conduct][coc] first.
+
+      [coc]: https://example.com/conduct
+    want: ""
+  - name: clean
+    input: |
+      # Contributing
+
+      Everyone here follows the [Code of Conduct](CODE_OF_CONDUCT.md).
+    want: ""

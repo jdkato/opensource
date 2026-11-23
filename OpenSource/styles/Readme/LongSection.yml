@@ -1,0 +1,70 @@
+# An Install or Usage section of more than 600 words is a manual inside
+# the README. Keep the common case here and move the rest to the docs.
+extends: metric
+message: "This section runs %s words. Keep the common case here, and link to the docs for the rest."
+link: https://gitlab.com/tgdp/templates/-/blob/main/readme/guide_readme.md#readme-best-practices
+level: suggestion
+scope: 'doc(section:has(> :is(h1, h2, h3, h4, h5, h6):is(:contains("Install"), :contains("Usage"), :contains("Getting started"), :contains("Quick start"), :contains("Quickstart"), :contains("Example"))))'
+formula: words
+condition: "> 600"
+
+tests:
+  - name: fires
+    input: |
+      # tool
+
+      ## Usage
+
+      Pass a file and the tool draws every column too. Pass a file and the
+      tool draws every column too. Pass a file and the tool draws every
+      column too. Pass a file and the tool draws every column too. Pass a
+      file and the tool draws every column too. Pass a file and the tool
+      draws every column too. Pass a file and the tool draws every column
+      too. Pass a file and the tool draws every column too. Pass a file and
+      the tool draws every column too. Pass a file and the tool draws every
+      column too. Pass a file and the tool draws every column too. Pass a
+      file and the tool draws every column too. Pass a file and the tool
+      draws every column too. Pass a file and the tool draws every column
+      too. Pass a file and the tool draws every column too. Pass a file and
+      the tool draws every column too. Pass a file and the tool draws every
+      column too. Pass a file and the tool draws every column too. Pass a
+      file and the tool draws every column too. Pass a file and the tool
+      draws every column too. Pass a file and the tool draws every column
+      too. Pass a file and the tool draws every column too. Pass a file and
+      the tool draws every column too. Pass a file and the tool draws every
+      column too. Pass a file and the tool draws every column too. Pass a
+      file and the tool draws every column too. Pass a file and the tool
+      draws every column too. Pass a file and the tool draws every column
+      too. Pass a file and the tool draws every column too. Pass a file and
+      the tool draws every column too. Pass a file and the tool draws every
+      column too. Pass a file and the tool draws every column too. Pass a
+      file and the tool draws every column too. Pass a file and the tool
+      draws every column too. Pass a file and the tool draws every column
+      too. Pass a file and the tool draws every column too. Pass a file and
+      the tool draws every column too. Pass a file and the tool draws every
+      column too. Pass a file and the tool draws every column too. Pass a
+      file and the tool draws every column too. Pass a file and the tool
+      draws every column too. Pass a file and the tool draws every column
+      too. Pass a file and the tool draws every column too. Pass a file and
+      the tool draws every column too. Pass a file and the tool draws every
+      column too. Pass a file and the tool draws every column too. Pass a
+      file and the tool draws every column too. Pass a file and the tool
+      draws every column too. Pass a file and the tool draws every column
+      too. Pass a file and the tool draws every column too. Pass a file and
+      the tool draws every column too. Pass a file and the tool draws every
+      column too. Pass a file and the tool draws every column too. Pass a
+      file and the tool draws every column too. Pass a file and the tool
+      draws every column too. Pass a file and the tool draws every column
+      too. Pass a file and the tool draws every column too. Pass a file and
+      the tool draws every column too. Pass a file and the tool draws every
+      column too. Pass a file and the tool draws every column too.
+    want: |
+      3:1:Readme.LongSection:This section runs 601.00 words. Keep the common case here, and link to the docs for the rest.
+  - name: clean
+    input: |
+      # tool
+
+      ## Usage
+
+      Run `tool data.csv` to draw a chart. See the docs for every option.
+    want: ""

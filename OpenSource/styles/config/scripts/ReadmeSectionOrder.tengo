@@ -1,0 +1,106 @@
+// Standard Readme's required sections out of order: Install, then Usage,
+// then Contributing. Use with `scope: raw` on Markdown. License is checked
+// by Readme.LicenseLast.
+text := import("text")
+
+matches := []
+
+names := ["Install", "Usage", "Contributing"]
+kinds := [
+    `(?i)^(?:install|installation|installing|getting[ -]started|get[ -]started|quick[ -]?start|setup|set[ -]up|download)\b`,
+    `(?i)^(?:usage|basic usage|how to use|using|examples?|tutorial)\b`,
+    `(?i)^(?:contribut\w*|how to contribute|development|developing|hacking)\b`
+]
+
+classify := func(title) {
+    // Drop a leading emoji, :shortcode:, or link bracket.
+    t := text.re_replace(`^(?:[^A-Za-z0-9]+|:\w+:\s*)+`, title, "")
+    for i, re in kinds {
+        if text.re_match(re, t) {
+            return i
+        }
+    }
+    return -1
+}
+
+found := []    // {kind, level, begin, end}
+fenced := ""
+prev := ""     // the previous line, for setext headings
+prevStart := 0
+offset := 0
+
+for line in text.split(scope, "\n") {
+    start := offset
+    offset += len(line) + 1
+
+    fence := text.re_find(`^ {0,3}(` + "```" + `|~~~)`, line)
+    if fenced != "" {
+        if fence != undefined && fence[0][1].text == fenced {
+            fenced = ""
+        }
+        prev = ""
+        continue
+    } else if fence != undefined {
+        fenced = fence[0][1].text
+        prev = ""
+        continue
+    }
+
+    level := 0
+    title := ""
+    begin := start
+
+    atx := text.re_find(`^ {0,3}(#{1,6})[ \t]+(.+?)[ \t#]*$`, line)
+    html := text.re_find(`(?i)^\s*<h([1-6])[^>]*>\s*([^<]+)`, line)
+    setext := text.re_find(`^ {0,3}(=+|-+)[ \t]*$`, line)
+    if atx != undefined {
+        level = len(atx[0][1].text)
+        title = atx[0][2].text
+        begin = start + atx[0][2].begin
+    } else if html != undefined {
+        level = int(html[0][1].text)
+        title = html[0][2].text
+        begin = start + html[0][2].begin
+    } else if setext != undefined && text.trim_space(prev) != "" && !text.re_match(`^\s*(?:[-*+>|]|\d+[.)])`, prev) {
+        level = text.has_prefix(setext[0][1].text, "=") ? 1 : 2
+        title = text.trim_space(prev)
+        begin = prevStart + text.index(prev, title)
+    }
+
+    if level > 0 {
+        k := classify(title)
+        if k >= 0 {
+            found = append(found, {kind: k, level: level, begin: begin, end: begin + len(text.trim_space(title))})
+        }
+    }
+
+    prev = line
+    prevStart = start
+}
+
+// Compare only the top level the sections appear at, so a "### Usage" under
+// an "## Install" isn't read as a section of its own.
+top := 7
+for f in found {
+    if f.level < top {
+        top = f.level
+    }
+}
+
+seen := [false, false, false]
+last := -1
+for f in found {
+    if f.level != top || seen[f.kind] {
+        continue
+    }
+    seen[f.kind] = true
+    if f.kind < last {
+        matches = append(matches, {
+            begin: f.begin,
+            end: f.end,
+            message: "'%s' is the " + names[f.kind] + " section; it goes before " + names[last] + "."
+        })
+    } else {
+        last = f.kind
+    }
+}

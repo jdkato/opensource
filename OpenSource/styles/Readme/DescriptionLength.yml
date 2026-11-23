@@ -1,0 +1,43 @@
+# The short description is one line of fewer than 120 characters, so it
+# can double as the package and repository description. Read as the first
+# sentence after the title, skipping badges.
+extends: existence
+message: "The description's first sentence runs to 120 characters or more. Open with one short line that says what the project is."
+link: https://github.com/RichardLitt/standard-readme/blob/main/spec.md#short-description
+level: warning
+scope: 'text & doc(h1 + p:not(:has(img)), h1 + p:has(img) + p)'
+nonword: true
+# A sentence ends at a period, question mark, or exclamation mark before a
+# space or the end; "v1.2" and "e.g." don't end one.
+raw:
+  - '^(?:[^.!?]|[.!?](?=\S)){120,}'
+
+tests:
+  - name: fires
+    input: |
+      # tool
+
+      A command-line tool that reads CSV files from disk or standard input and draws them as bar, line, or scatter charts in the terminal.
+    want: |
+      3:1:Readme.DescriptionLength:The description's first sentence runs to 120 characters or more. Open with one short line that says what the project is.
+  - name: after badges
+    input: |
+      # tool
+
+      [![CI](https://example.com/ci.svg)](https://example.com/ci)
+
+      A command-line tool that reads CSV files from disk or standard input and draws them as bar, line, or scatter charts in the terminal.
+    want: |
+      5:1:Readme.DescriptionLength:The description's first sentence runs to 120 characters or more. Open with one short line that says what the project is.
+  - name: a short first sentence
+    input: |
+      # tool
+
+      Turn CSV files into charts. It reads files from disk or standard input, and draws bar, line, or scatter charts, sized to the window.
+    want: ""
+  - name: clean
+    input: |
+      # tool
+
+      Turn CSV files into charts in the terminal.
+    want: ""

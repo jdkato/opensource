@@ -1,0 +1,9 @@
+fixtures/contributing/CONTRIBUTING.md:1:1:Contributing.CodeOfConduct:No link to a code of conduct. Link to the one the project follows.
+fixtures/contributing/CONTRIBUTING.md:1:1:Contributing.FirstStep:Nothing here tells a newcomer where to start. Point to good first issues, or name a first step.
+fixtures/contributing/CONTRIBUTING.md:3:49:Welcoming.Blame:'Low-effort pull requests' blames the reader. Say what to do instead.
+fixtures/contributing/CONTRIBUTING.md:3:74:Welcoming.Blame:'will be closed without comment' blames the reader. Say what to do instead.
+fixtures/contributing/CONTRIBUTING.md:5:4:Contributing.Steps:The 'Setting up' section has no numbered steps. Write the setup as a numbered list, or link to the guide that has it.
+fixtures/contributing/CONTRIBUTING.md:7:19:Welcoming.Dismissive:'Simply' can make a newcomer who is stuck feel shut out. Drop it.
+fixtures/contributing/CONTRIBUTING.md:15:4:Contributing.Imperative:'You should' softens the step. Start it with the verb.
+fixtures/contributing/CONTRIBUTING.md:16:4:Contributing.Imperative:'Then you' softens the step. Start it with the verb.
+fixtures/contributing/CONTRIBUTING.md:17:4:Welcoming.Blame:'As already stated' blames the reader. Say what to do instead.

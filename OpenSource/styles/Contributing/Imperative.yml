@@ -1,0 +1,30 @@
+# A numbered step is an instruction: "Run the build", not "You should run
+# the build". Start each step with the verb.
+extends: existence
+message: "'%s' softens the step. Start it with the verb."
+link: https://gitlab.com/tgdp/templates/-/blob/main/readme/guide_readme.md#about-the-instructions-for-using-project-section
+level: suggestion
+scope: 'list & doc(ol)'
+ignorecase: true
+tokens:
+  - '^\s*you (?:should|can|could|may|might|need to|will want to|will need to|have to|must)\b'
+  - "^\\s*it(?:'s| is) (?:recommended|a good idea|best) to\\b"
+  - '^\s*(?:next|then|now),? you\b'
+
+tests:
+  - name: fires
+    input: |
+      1. You should install Go.
+      2. Then you clone the repository.
+    want: |
+      1:4:Contributing.Imperative:'You should' softens the step. Start it with the verb.
+      2:4:Contributing.Imperative:'Then you' softens the step. Start it with the verb.
+  - name: bullets are left alone
+    input: |
+      - You can also use Docker.
+    want: ""
+  - name: clean
+    input: |
+      1. Install Go.
+      2. Clone the repository.
+    want: ""

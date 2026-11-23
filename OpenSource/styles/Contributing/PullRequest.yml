@@ -1,0 +1,24 @@
+# A contributing guide explains how a change is submitted and reviewed:
+# a pull request, a merge request, or a patch.
+extends: occurrence
+message: "Nothing here says how to submit a change. Describe how to open a pull request and how it's reviewed."
+link: https://gitlab.com/tgdp/templates/-/blob/main/contributing-guide/guide_contributing-guide.md#about-the-contribution-workflow-section
+level: warning
+scope: raw
+token: '(?i)\bpull[- ]requests?\b|\bmerge requests?\b|\bPRs?\b|\bpatch(?:es)?\b|\bchange ?lists?\b'
+min: 1
+
+tests:
+  - name: fires
+    input: |
+      # Contributing
+
+      Run `make` to build the project.
+    want: |
+      1:1:Contributing.PullRequest:Nothing here says how to submit a change. Describe how to open a pull request and how it's reviewed.
+  - name: clean
+    input: |
+      # Contributing
+
+      Push a branch to your fork and open a pull request against `main`.
+    want: ""

@@ -1,0 +1,49 @@
+# Standard Readme's Install section shows how to install in a code block,
+# so a reader can copy the command. A link to the instructions also counts.
+extends: existence
+message: "The '%s' section has no code block. Show the install command in one."
+link: https://github.com/RichardLitt/standard-readme/blob/main/spec.md#install
+level: warning
+scope: 'doc(section:has(> :is(h1, h2, h3, h4, h5, h6):is(:contains("Install"), :contains("Getting started"), :contains("Quick start"), :contains("Quickstart"))):not(:has(pre)):not(:has(a)))'
+nonword: true
+raw:
+  - '^[^\n]+'
+
+tests:
+  - name: fires
+    input: |
+      # tool
+
+      ## Installation
+
+      Download it from the releases page.
+    want: |
+      3:4:Readme.InstallCode:The 'Installation' section has no code block. Show the install command in one.
+  - name: code in a subsection
+    input: |
+      # tool
+
+      ## Install
+
+      ### From source
+
+      ```sh
+      make install
+      ```
+    want: ""
+  - name: a link to the instructions
+    input: |
+      # tool
+
+      ## Install
+
+      See [INSTALL.md](INSTALL.md).
+    want: ""
+  - name: clean
+    input: |
+      # tool
+
+      ## Install
+
+          npm install tool
+    want: ""

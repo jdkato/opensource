@@ -1,0 +1,39 @@
+# The short description comes right after the title and any badges, with
+# no heading of its own. A section heading straight after the title means
+# there's none.
+extends: existence
+message: "No short description. Add one line about the project above '%s'."
+link: https://github.com/RichardLitt/standard-readme/blob/main/spec.md#short-description
+level: warning
+scope: 'doc(h1 + section, h1 + p:has(img) + section)'
+nonword: true
+raw:
+  - '^[^\n]+'
+
+tests:
+  - name: fires
+    input: |
+      # tool
+
+      ## Install
+    want: |
+      3:4:Readme.Description:No short description. Add one line about the project above 'Install'.
+  - name: after badges
+    input: |
+      # tool
+
+      [![CI](https://example.com/ci.svg)](https://example.com/ci)
+
+      ## Install
+    want: |
+      5:4:Readme.Description:No short description. Add one line about the project above 'Install'.
+  - name: clean
+    input: |
+      # tool
+
+      [![CI](https://example.com/ci.svg)](https://example.com/ci)
+
+      Turn CSV files into charts.
+
+      ## Install
+    want: ""

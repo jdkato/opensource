@@ -1,0 +1,3 @@
+fixtures/contributing-stub/CONTRIBUTING.md:1:1:Contributing.PullRequest:Nothing here says how to submit a change. Describe how to open a pull request and how it's reviewed.
+fixtures/contributing-stub/CONTRIBUTING.md:1:1:Contributing.Setup:Nothing here says how to set up the project. Add the steps to get the code and its dependencies.
+fixtures/contributing-stub/CONTRIBUTING.md:1:1:Contributing.Tests:Nothing here says how to run the tests. Give the command.

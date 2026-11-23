@@ -1,0 +1,39 @@
+# A contributing guide says how to set up the project to work on it: what
+# to install and how to get the code. A heading, a clone command, or a link
+# to a development guide counts.
+extends: occurrence
+message: "Nothing here says how to set up the project. Add the steps to get the code and its dependencies."
+link: https://opensource.guide/starting-a-project/#writing-your-contributing-guidelines
+level: warning
+scope: raw
+token: '(?im)^(?: {0,3}#{1,6}[ \t]+|[ \t]*<h[1-6][^>]*>[ \t]*)(?:[^\w\n]+|:\w+:[ \t]*)*(?:[\w ]+ )?(?:set[ -]?up|setting up|environment|development|developing|getting started|get started|prerequisites|building|build|install(?:ation|ing)?|hacking)\b|\bgit clone\b|\[[^\]\n]*\b(?:set ?up|setting up|development|dev[- ]guide|developer guide|getting started|build(?:ing)?|environment)\b[^\]\n]*\]\s*[(\[]|\bset(?:ting)? up (?:your|the|a) (?:\w+ )?(?:environment|machine|project|repo(?:sitory)?)\b'
+min: 1
+
+tests:
+  - name: fires
+    input: |
+      # Contributing
+
+      Thanks for helping. Open a pull request when you're ready.
+    want: |
+      1:1:Contributing.Setup:Nothing here says how to set up the project. Add the steps to get the code and its dependencies.
+  - name: a heading counts
+    input: |
+      # Contributing
+
+      ## Local development environment
+
+      Read the docs.
+    want: ""
+  - name: a link counts
+    input: |
+      # Contributing
+
+      The [rustc-dev-guide](https://example.com/guide) covers building the compiler.
+    want: ""
+  - name: clean
+    input: |
+      # Contributing
+
+      Fork the repository, then run `git clone` on your fork.
+    want: ""

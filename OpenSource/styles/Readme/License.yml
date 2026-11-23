@@ -1,0 +1,33 @@
+# Standard Readme requires a License section. Licence, Licensing,
+# Copyright, and Terms of use count.
+extends: occurrence
+message: "No License section. Name the license and who holds it."
+link: https://github.com/RichardLitt/standard-readme/blob/main/spec.md#license
+level: warning
+scope: raw
+# A heading of any level, after an optional emoji, or a setext heading.
+token: '(?im)^(?: {0,3}#{1,6}[ \t]+|[ \t]*<h[1-6][^>]*>[ \t]*)(?:[^\w\n]+|:\w+:[ \t]*)*(?:licen[cs]\w*|copyright|terms of use|legal)\b|^(?:licen[cs]\w*|copyright|terms of use|legal)\b[^\n]*\n {0,3}(?:=+|-+)[ \t]*$'
+min: 1
+
+tests:
+  - name: fires
+    input: |
+      # tool
+
+      Turn CSV files into charts.
+
+      ## Overview
+
+      Text.
+    want: |
+      1:1:Readme.License:No License section. Name the license and who holds it.
+  - name: clean
+    input: |
+      # tool
+
+      Turn CSV files into charts.
+
+      ## License
+
+      Text.
+    want: ""

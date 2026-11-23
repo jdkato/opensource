@@ -1,0 +1,49 @@
+# Standard Readme ends with the License section. A footer of links or
+# badges below it is fine; another section is not.
+extends: existence
+message: "'%s' follows the License section. Make License the last section."
+link: https://github.com/RichardLitt/standard-readme/blob/main/spec.md#license
+level: warning
+scope: 'doc(section:has(> :is(h1, h2, h3, h4, h5, h6):is(:contains("Licen"), :contains("Terms of use"))) + section)'
+nonword: true
+raw:
+  - '^[^\n]+'
+
+tests:
+  - name: fires
+    input: |
+      # tool
+
+      ## License
+
+      MIT © Jane Doe
+
+      ## Sponsors
+
+      Thanks to our sponsors.
+    want: |
+      7:4:Readme.LicenseLast:'Sponsors' follows the License section. Make License the last section.
+  - name: a footer is fine
+    input: |
+      # tool
+
+      ## License
+
+      MIT © Jane Doe
+
+      ---
+
+      [Website](https://example.com) · [Docs](https://example.com/docs)
+    want: ""
+  - name: clean
+    input: |
+      # tool
+
+      ## Contributing
+
+      ## Licence
+
+      ### Third-party code
+
+      Apache-2.0.
+    want: ""
