@@ -1,6 +1,5 @@
 # "Guys" addresses a mixed group as men. Std's gendered terms are kept,
-# since a welcoming guide avoids those too, except that "steward" is
-# neutral; only "stewardess" is replaced.
+# since a welcoming guide avoids those too.
 extends: Std.Usage.GenderedTerms
 link: https://opensource.guide/starting-a-project/#how-you-write-and-code-affects-your-brand-too
 level: suggestion
@@ -9,9 +8,6 @@ swap+:
   hey guys: hi everyone
   hi guys: hi everyone
   guys: everyone
-  stewardess: flight attendant
-swap-:
-  - steward(?:ess)?
 
 tests:
   - name: fires
